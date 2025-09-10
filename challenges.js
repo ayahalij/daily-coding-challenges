@@ -12,8 +12,6 @@ Examples:
 sayHello() //=> Hello!
 -----------------------------------------------------------------------------*/
 // Your solution for 00-sayHello (example) here:
-
-
 function sayHello() {
   return "Hello!";
 }
@@ -35,9 +33,9 @@ addOne(1) //=> 2
 addOne(-5) //=> -4
 -----------------------------------------------------------------------------*/
 // Your solution for 01-addOne here:
-
-
-
+function addOne(argument){
+  return argument + 1;
+}
 
 
 /*-----------------------------------------------------------------------------
@@ -59,9 +57,13 @@ addTwoNumbers(0, 0) //=> 0
 addTwoNumbers('Hello', 5) //=> NaN
 -----------------------------------------------------------------------------*/
 // Your solution for 02-addTwoNumbers here:
+function addTwoNumbers(a, b){
+  if (typeof a !== 'number' || typeof b !== 'number') {
+    return NaN
+  }
 
-
-
+  return a + b
+}
 
 
 /*-----------------------------------------------------------------------------
@@ -83,9 +85,13 @@ sumNumbers([2, 10, -5]) //=> 7
 sumNumbers([]) //=> 0
 -----------------------------------------------------------------------------*/
 // Your solution for 03-sumNumbers here:
+function sumNumbers(numbers) {
+  if (numbers.length === 0){
+     return 0
+    }
 
-
-
+  return numbers.reduce((sum, num) => sum + num, 0)
+}
 
 
 /*-----------------------------------------------------------------------------
@@ -107,9 +113,9 @@ addList(1,50,1.23) //=> 52.23
 addList(7,-12) //=> -5
 -----------------------------------------------------------------------------*/
 // Your solution for 04-addList here:
-
-
-
+function addList(...numbers) {
+    return numbers.reduce((sum, num) => sum + num, 0)
+}
 
 
 /*-----------------------------------------------------------------------------
@@ -134,9 +140,13 @@ computeRemainder(4,0) //=> Infinity
 computeRemainder(10.5, 3) //=> 1.5
 -----------------------------------------------------------------------------*/
 // Your solution for 05-computeRemainder here:
+function computeRemainder(dividend, divisor) {
+  if (divisor === 0) {
+    return Infinity
+  }
 
-
-
+  return dividend - (Math.floor(dividend / divisor) * divisor)
+}
 
 
 /*-----------------------------------------------------------------------------
@@ -161,9 +171,16 @@ range(1,1) //=> []
 range(5,2) //=> "First argument must be less than second"
 -----------------------------------------------------------------------------*/
 // Your solution for 06-range here:
+function range(start, end) {
+  if (start > end) return "First argument must be less than second"
+  const result = []
+  
+  for (let i = start; i < end; i++) {
+    result.push(i)
+  }
 
-
-
+  return result
+}
 
 
 /*-----------------------------------------------------------------------------
@@ -183,9 +200,9 @@ Examples:
 reverseUpcaseString("SEI Rocks!") //=> "!SKCOR IES" 
 -----------------------------------------------------------------------------*/
 // Your solution for 07-reverseUpcaseString here:
-
-
-
+function reverseUpcaseString(string) {
+  return string.split('').reverse().join('').toUpperCase()
+}
 
 
 /*-----------------------------------------------------------------------------
@@ -205,9 +222,13 @@ removeEnds('SEB Rocks!') //=> "EB Rocks"
 removeEnds('a') //=> "" (empty string)
 -----------------------------------------------------------------------------*/
 // Your solution for 08-removeEnds here:
-
-
-
+function removeEnds(string) {
+  if (string.length < 3){ 
+    return ""
+  }
+  
+  return string.slice(1, -1)
+}
 
 
 /*-----------------------------------------------------------------------------
@@ -247,9 +268,15 @@ charCount('Today is fantastic!')
 }
 -----------------------------------------------------------------------------*/
 // Your solution for 09-charCount here:
+function charCount(string) {
+  const count = {}
 
+  for (let char of string) {
+    count[char] = count[char] ? count[char] + 1 : 1
+  }
 
-
+  return count
+}
 
 
 /*-----------------------------------------------------------------------------
@@ -277,9 +304,16 @@ formatWithPadding(42, '*', 10) //=> "********42"
 formatWithPadding(1234, '*', 3) //=> "1234"
 -----------------------------------------------------------------------------*/
 // Your solution for 10-formatWithPadding here:
+function formatWithPadding(num, padChar, length) {
+  const numString = num.toString();
 
+  if (numString.length >= length){
+    return numString
+  }
 
-
+  const paddingNeeded = length - numString.length
+  return padChar.repeat(paddingNeeded) + numString
+}
 
 
 /*-----------------------------------------------------------------------------
@@ -305,9 +339,14 @@ isPalindrome('A nut for a jar of tuna') //=> true
 isPalindrome('') //=> true
 -----------------------------------------------------------------------------*/
 // Your solution for 11-isPalindrome here:
+function isPalindrome(string) {
+  if (string.length <= 1){
+    return true
+  }
 
-
-
+  const cleanStr = string.toLowerCase().replace(/\s/g, '')
+  return cleanStr === cleanStr.split('').reverse().join('')
+}
 
 
 /*-----------------------------------------------------------------------------
@@ -335,7 +374,21 @@ hammingDistance('!!!!', '****') //=> 4
 hammingDistance('abc', 'ab') //=> NaN
 -----------------------------------------------------------------------------*/
 // Your solution for 12-hammingDistance here:
+function hammingDistance(string1, string2) {
+  if (string1.length !== string2.length) {
+    return NaN
+  }
 
+  let distance = 0
+  
+  for (let i = 0; i < string1.length; i++) {
+    if (string1[i] !== string2[i]){
+      distance++
+    }
+  }
+
+  return distance
+}
 
 
 
@@ -362,9 +415,15 @@ mumble('121') //=> '1-22-111'
 mumble('!A 2') //=> '!-AA-   -2222'
 -----------------------------------------------------------------------------*/
 // Your solution for 13-mumble here:
+function mumble(string) {
+  const result = []
 
-
-
+  for (let i = 0; i < string.length; i++) {
+    result.push(string[i].repeat(i + 1))
+  }
+  
+  return result.join('-')
+}
 
 
 /*-----------------------------------------------------------------------------
@@ -390,9 +449,15 @@ fromPairs([ ['name', 'Sam"], ['age', 24], ['name', 'Sally'] ])
 //=> { name: "Sally", age: 24 }
 -----------------------------------------------------------------------------*/
 // Your solution for 14-fromPairs here:
+function fromPairs(pairs) {
+  const obj = {}
 
-
-
+  for (let pair of pairs) {
+    obj[pair[0]] = pair[1]
+  }
+  
+  return obj
+}
 
 
 /*-----------------------------------------------------------------------------
@@ -421,9 +486,16 @@ mergeObjects({a: 1, b: 2, c: 3}, {d: 4}, {b: 22, d: 44})
 //=> {a: 1, b: 22, c: 3, d: 44}
 -----------------------------------------------------------------------------*/
 // Your solution for 15-mergeObjects here:
+function mergeObjects(target, ...sources) {
 
+  for (let source of sources) {
+    for (let key in source) {
+      target[key] = source[key]
+    }
+  }
 
-
+  return target
+}
 
 
 /*-----------------------------------------------------------------------------
@@ -463,9 +535,17 @@ findHighestPriced([
 //=> { sku: 'b2', price: 50 }
 -----------------------------------------------------------------------------*/
 // Your solution for 16-findHighestPriced here:
+function findHighestPriced(products) {
+  let highest = products[0]
 
+  for (let i = 1; i < products.length; i++) {
+    if (products[i].price > highest.price) {
+      highest = products[i]
+    }
+  }
 
-
+  return highest
+}
 
 
 /*-----------------------------------------------------------------------------
@@ -501,9 +581,15 @@ mapArray( ['rose', 'tulip', 'daisy'], function(f, i) {
 //=> ["1 - rose", "2 - tulip", "3 - daisy"]
 -----------------------------------------------------------------------------*/
 // Your solution for 17-mapArray here:
+function mapArray(arr, callback) {
+  const result = []
 
+  for (let i = 0; i < arr.length; i++) {
+    result.push(callback(arr[i], i))
+  }
 
-
+  return result
+}
 
 
 /*-----------------------------------------------------------------------------
@@ -552,9 +638,15 @@ reduceArray( ['Yes', 'No', 'Yes', 'Maybe'], function(acc, v) {
 //=> {"Yes": 2, "No": 1, "Maybe": 1}
 -----------------------------------------------------------------------------*/
 // Your solution for 18-reduceArray here:
+function reduceArray(array, callback, initialValue) {
+  let acc = initialValue
 
+  for (let i = 0; i < array.length; i++) {
+    acc = callback(acc, array[i], i)
+  }
 
-
+  return acc
+}
 
 
 /*-----------------------------------------------------------------------------
@@ -581,9 +673,21 @@ flatten( [1, [2, [3, [4]]], 1, 'a', ['b', 'c']] );
 //=> [1, 2, 3, 4, 1, 'a', 'b', 'c']
 -----------------------------------------------------------------------------*/
 // Your solution for 19-flatten here:
+function flatten(array) {
+  const result = []
 
-
-
+  for (let element of array) {
+    if (Array.isArray(element)) {
+      result.push(...flatten(element))
+    } 
+    
+    else {
+      result.push(element)
+    }
+  }
+  
+  return result
+}
 
 
 /*-----------------------------------------------------------------------------
@@ -616,9 +720,27 @@ primeFactors(200) //=> [2, 2, 2, 5, 5]
 Hint: Code a nested isPrime(n) helper function that returns true if n is prime, otherwise it returns false
 -----------------------------------------------------------------------------*/
 // Your solution for 20-primeFactors here:
+function primeFactors(num) {
+  if (num <= 1 || !Number.isInteger(num)) return []
+  
+  const factors = []
+  let divisor = 2
+  
+  while (divisor * divisor <= num) {
+    while (num % divisor === 0) {
+      factors.push(divisor)
+      num = num / divisor
+    }
 
-
-
+    divisor++
+  }
+  
+  if (num > 1) {
+    factors.push(num)
+  }
+  
+  return factors
+}
 
 
 /*-----------------------------------------------------------------------------
@@ -643,9 +765,16 @@ isPrime(29) //=> true
 isPrime(200) //=> false
 -----------------------------------------------------------------------------*/
 // Your solution for 21-isPrime here:
+function isPrime(num) {
+  if (num <= 1 || !Number.isInteger(num)) {
+    return false
+  }
 
-
-
+  for (let i = 2; i <= Math.sqrt(num); i++) {
+    if (num % i === 0) return false
+  }
+  return true
+}
 
 
 /*-----------------------------------------------------------------------------
@@ -672,9 +801,22 @@ intersection(['a', 1], [true, 'a', 15]) //=> ['a']
 intersection([1, 'a', true, 1, 1], [true, 1, 'b', 1]) //=> [1, true, 1]
 -----------------------------------------------------------------------------*/
 // Your solution for 22-intersection here:
+function intersection(array1, array2) {
+  const result = []
+  const array2Copy = [...array2]
+  
+  for (let element of array1) {
+    const index = array2Copy.indexOf(element)
 
-
-
+    if (index !== -1) {
+      result.push(element)
+      array2Copy.splice(index, 1)
+    }
+  
+  }
+  
+  return result
+}
 
 
 /*-----------------------------------------------------------------------------
@@ -703,9 +845,25 @@ balancedBrackets( '[(])' ) // => false
 balancedBrackets( '[({}[])]' ) // => true
 -----------------------------------------------------------------------------*/
 // Your solution for 23-balancedBrackets here:
+function balancedBrackets(string) {
+  const stack = []
+  const pairs = { ')': '(', ']': '[', '}': '{' }
+  
+  for (let char of string) {
+    if (char === '(' || char === '[' || char === '{') {
+      stack.push(char)
+    }
+    
+    else {
+      if (stack.length === 0 || stack.pop() !== pairs[char]) {
+        return false
+      }
+    }
 
-
-
+  }
+  
+  return stack.length === 0
+}
 
 
 /*-----------------------------------------------------------------------------
@@ -741,9 +899,13 @@ isWinningTicket( [ ['ABC', 66], ['dddd', 100], ['Hello', 108] ] ) // => true
 isWinningTicket( [ ['ABC', 66], ['dddd', 15], ['Hello', 108] ] ) // => false
 -----------------------------------------------------------------------------*/
 // Your solution for 24-isWinningTicket here:
+function isWinningTicket(ticket) {
 
+  return ticket.every(([str, code]) => {
+    return str.split('').some(char => char.charCodeAt(0) === code)
+  })
 
-
+}
 
 
 /*-----------------------------------------------------------------------------
@@ -785,9 +947,14 @@ getNumForIP( '192.156.99.15' ) // => 3231474447
 getNumForIP( '10.0.0.1' ) // => 167772161
 -----------------------------------------------------------------------------*/
 // Your solution for 25-getNumForIP here:
+function getNumForIP(ip) {
+  const octets = ip.split('.').map(Number)
 
+  return octets.reduce((total, octet, index) => {
+    return total + (octet * Math.pow(256, 3 - index))
+  }, 0)
 
-
+}
 
 
 /*-----------------------------------------------------------------------------
@@ -818,9 +985,30 @@ toCamelCase( 'Mama-mia' ) // => 'MamaMia'
 toCamelCase( 'A_b_c' ) // => 'ABC'
 -----------------------------------------------------------------------------*/
 // Your solution for 26-toCamelCase here:
+function toCamelCase(str) {
+  let result = ""
+  let nextCharUpperCase = false
 
+  for (let i = 0; i < str.length; i++) {
 
+    if (str[i] === '-' || str[i] === '_') {
+      nextCharUpperCase = true;
+    } 
+    
+    else {
+      if (nextCharUpperCase) {
+        result += str[i].toUpperCase();
+        nextCharUpperCase = false;
+      } 
 
+      else {
+        result += str[i]
+      }
+    }
+  }
+
+  return result
+}
 
 
 /*-----------------------------------------------------------------------------
@@ -853,9 +1041,19 @@ countTheBits( 255 ) //=> 8
 countTheBits( 65535 ) //=> 16
 -----------------------------------------------------------------------------*/
 // Your solution for 27-countTheBits here:
+function countTheBits(num) {
+  let count = 0
 
+  while (num > 0) {
+    if (num % 2 === 1) {
+      count++;
+    }
 
+    num = Math.floor(num / 2)
+  }
 
+  return count
+}
 
 
 /*-----------------------------------------------------------------------------
@@ -893,9 +1091,36 @@ gridTrip( [10, 5], 'D5L15U2' ) //-> [-5, 2]
 gridTrip( [100, -22], 'L2L15D50U1D9') //=> [83, -80]
 -----------------------------------------------------------------------------*/
 // Your solution for 28-gridTrip here:
+function gridTrip(startPos, moves) {
+  let [x, y] = startPos
+  const movePattern = /[UDRL]\d+/g
+  const movesList = moves.match(movePattern)
+  
+  for (let move of movesList) {
+    const direction = move[0]
+    const distance = parseInt(move.slice(1))
+    
+    switch (direction) {
+      case 'U':
+        y += distance
+        break
 
+      case 'D':
+        y -= distance
+        break
 
+      case 'R':
+        x += distance
+        break
 
+      case 'L':
+        x -= distance
+        break
+    }
+  }
+  
+  return [x, y]
+}
 
 
 /*-----------------------------------------------------------------------------
@@ -928,9 +1153,28 @@ addChecker( [10, 15, 16, 22], 32 ) // => true
 addChecker( [10, 15, 16, 22], 19 ) // => false
 -----------------------------------------------------------------------------*/
 // Your solution for 29-addChecker here:
+function addChecker(sortedArray, target) {
+  let left = 0
+  let right = sortedArray.length - 1
+  
+  while (left < right) {
+    const sum = sortedArray[left] + sortedArray[right]
 
-
-
+    if (sum === target) {
+      return true
+    } 
+    
+    else if (sum < target) {
+      left++
+    } 
+    
+    else {
+      right--
+    }
+  }
+  
+  return false
+}
 
 
 /*-----------------------------------------------------------------------------
@@ -965,6 +1209,18 @@ totalTaskTime( [5, 2, 6, 8, 7, 2], 3 ) // => 12
 -----------------------------------------------------------------------------*/
 // Your solution for 30- here:
 
-
-
+function totalTaskTime(queue, threads) {
+  if (queue.length === 0) {
+    return 0
+  }
+  
+  const threadTimes = new Array(threads).fill(0)
+  
+  for (let task of queue) {
+    const minIndex = threadTimes.indexOf(Math.min(...threadTimes))
+    threadTimes[minIndex] += task
+  }
+  
+  return Math.max(...threadTimes)
+}
 
